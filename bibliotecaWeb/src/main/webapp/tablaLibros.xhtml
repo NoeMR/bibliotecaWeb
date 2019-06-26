@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Administrador</title>
+    </h:head>
+    <h:body>
+        <div align="center">
+            <h1>Página Administrador</h1>
+           
+        </div>
+        <br></br>
+        <br></br>
+        <div align="center">
+            <h3>Agregar Libro</h3>
+            <h:form id="create">
+                <h:panelGrid columns="2">
+                    <p:outputLabel for="id" value="IdLibro"/>
+                    <p:inputText id="id" value="#{frmLibros.id}"/>
+                    <p:outputLabel for="isbn" value="Isbn"/>
+                    <p:inputText id="isbn" value="#{frmLibros.isbn}"/>
+                    <p:outputLabel for="titulo" value="Titulo"/>
+                    <p:inputText id="titulo" value="#{frmLibros.titulo}"/>
+                    <p:outputLabel for="editorial" value="Editorial"/>
+                    <p:selectOneMenu id="editorial" value="#{frmLibros.editorial}">
+                        <f:selectItems value="#{frmLibros.generarlistaEditoriales()}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel for="pais" value="Pais"/>
+                    <p:selectOneMenu id="pais" value="#{frmLibros.pais}">
+                        <f:selectItems value="#{frmLibros.generarlistaPaises()}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel for="autor" value="Autor"/>
+                    <p:selectOneMenu id="autor" value="#{frmLibros.autor}">
+                        <f:selectItems value="#{frmLibros.generarlistaAutores()}"/>
+                    </p:selectOneMenu>
+                    <p:commandButton value="Add" icon="fa fa-plus" action="#{frmLibros.agregar()}"/>
+                    <p:commandButton value="Delete" icon="fa fa-plus" action="#{frmLibros.eliminarLibro()}"/>
+                </h:panelGrid>
+            </h:form>
+        </div>
+        <br></br>
+        <br></br>
+        <div align="center">
+            <h3>Agregar Editorial</h3>
+            <h:form id="createE">
+                <h:panelGrid columns="2">
+                    <p:outputLabel for="idEditorial" value="Id"/>
+                    <p:inputText id="idEditorial" value="#{frmLibros.idEditorial}"/>
+                    <p:outputLabel for="nombreEditorial" value="Editorial"/>
+                    <p:inputText id="nombreEditorial" value="#{frmLibros.nombreEditorial}"/>
+                    <p:commandButton value="Add" icon="fa fa-plus" action="#{frmLibros.agregarEditorial()}"/>
+                </h:panelGrid>
+            </h:form>
+        </div>
+        <br></br>
+        <br></br>
+        <div align="center">
+            <h3>Agregar País</h3>
+            <h:form id="createP">
+                <h:panelGrid columns="2" >
+                    <p:outputLabel for="idPais" value="Id"/>
+                    <p:inputText id="idPais" value="#{frmLibros.idPais}"/>
+                    <p:outputLabel for="nombrePais" value="Pais"/>
+                    <p:inputText id="nombrePais" value="#{frmLibros.nombrePais}"/>
+                    <p:commandButton value="Add" icon="fa fa-plus" action="#{frmLibros.agregarPais()}"/>
+                </h:panelGrid>
+            </h:form>
+        </div>
+        <br></br>
+        <br></br>
+        <div align="center">
+            <h3>Agregar Autor</h3>
+            <h:form id="createA">
+                <h:panelGrid columns="2">
+                    <p:outputLabel for="idAutor" value="Id"/>
+                    <p:inputText id="idAutor" value="#{frmLibros.idAutor}"/>
+                    <p:outputLabel for="nombreAutor" value="Autor"/>
+                    <p:inputText id="nombreAutor" value="#{frmLibros.nombreAutor}"/>
+                    <p:commandButton value="Add" icon="fa fa-plus" action="#{frmLibros.agregarAutor()}"/>                    
+                    
+                </h:panelGrid>
+            </h:form>
+        </div>
+        <br></br>
+        <br></br>
+        <h:form>
+            
+            <p:dataTable paginator="true" rows="5" value="#{frmLibros.todo1()}" var="l">
+                <p:column headerText="Id">
+                    <h:outputText value="#{l.librosIdLibro.idLibro}"/>
+                </p:column>
+                <p:column headerText="ISBN">
+                    <h:outputText value="#{l.librosIdLibro.isbn}"/>
+                </p:column>
+                <p:column headerText="Titulo">
+                    <h:outputText value="#{l.librosIdLibro.titulo}"/>
+                </p:column>>
+                <p:column headerText="Editorial">
+                    <h:outputText value="#{l.librosIdLibro.editorialesIdEditorial.editorial}"/>
+                </p:column>
+                <p:column headerText="Pais">
+                    <h:outputText value="#{l.librosIdLibro.paisesIdPais.pais}"/>
+                </p:column>
+                <p:column headerText="Autor">
+                    <h:outputText value="#{l.autoresIdAutor.autor}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <br></br>
+        <br></br>
+        <div align="center">
+            <h:form>
+                <h:panelGrid>
+                    <p:commandButton value="Inicio" icon="fa fa-plus" action="inicio.jsf?faces-redirect=true"/>
+                </h:panelGrid>
+            </h:form>
+        </div>
+    </h:body>
+</html>
+
