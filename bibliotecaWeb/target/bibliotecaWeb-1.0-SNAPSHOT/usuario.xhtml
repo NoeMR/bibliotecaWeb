@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Usuario</title>
+    </h:head>
+    <h:body>
+        <h1 align="center">Usuario</h1>
+        <br></br>
+        <br></br>
+        <div align="center">
+            <h:form id="mostrar">
+                <h3>Buscar Libro</h3>
+                <p:dataTable id="tabla1" paginator="true" rows="5" value="#{frmLibros.todo1()}" var="l">
+                    <p:column headerText="Id" filterBy="#{l.librosIdLibro.idLibro}" filterMatchMode="contains">
+                        <h:outputText value="#{l.librosIdLibro.idLibro}"/>
+                    </p:column>
+                    <p:column headerText="ISBN" filterBy="#{l.librosIdLibro.isbn}" filterMatchMode="contains">
+                        <h:outputText value="#{l.librosIdLibro.isbn}"/>
+                    </p:column>
+                    <p:column headerText="Titulo" filterBy="#{l.librosIdLibro.titulo}" filterMatchMode="contains">
+                        <h:outputText value="#{l.librosIdLibro.titulo}"/>
+                    </p:column>>
+                    <p:column headerText="Editorial" filterBy="#{l.librosIdLibro.editorialesIdEditorial.editorial}" filterMatchMode="contains">
+                        <h:outputText value="#{l.librosIdLibro.editorialesIdEditorial.editorial}"/>
+                    </p:column>
+                    <p:column headerText="Pais" filterBy="#{l.librosIdLibro.paisesIdPais.pais}" filterMatchMode="contains">
+                        <h:outputText value="#{l.librosIdLibro.paisesIdPais.pais}"/>
+                    </p:column>
+                    <p:column headerText="Autor" filterBy="#{l.autoresIdAutor.autor}" filterMatchMode="contains">
+                        <h:outputText value="#{l.autoresIdAutor.autor}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </div>
+        <br></br>
+        <br></br>
+        <div align="center">
+            <h:form id="createPr">
+                <p:fieldset>
+                    <h3>Prestar Libro</h3>
+                    <h:panelGrid>
+                        <p:commandButton id="prestar" disabled="#{frmUsuarios.rDisableP() == 1}" value="Nuevo Prestamo" icon="fa fa-book" action="#{frmUsuarios.setDisableP(1)}" process="prestar" update="createPr:prestar createPr:idUsuario createPr:idLibro createPr:fechaPrestamo createPr:fechaDevolucion createPr:agregarPrestamo"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2">
+                        <p:outputLabel for="idUsuario" value="Id Usuario"/>
+                        <p:inputText id="idUsuario" disabled="#{frmUsuarios.rDisableP() == 0}" value="#{frmUsuarios.idUsuarioPrestamo}"/>
+                        <p:outputLabel for="idLibro" value="Id Libro"/>
+                        <p:inputText id="idLibro" disabled="#{frmUsuarios.rDisableP() == 0}" value="#{frmUsuarios.idLibroPrestamo}"/>
+                        <p:outputLabel for="fechaPrestamo" value="Fecha del Prestamo"/>
+                        <p:calendar id="fechaPrestamo" disabled="#{frmUsuarios.rDisableP() == 0}" value="#{frmUsuarios.fechaPrestamo}" showOn="button"/>
+                        <p:outputLabel for="fechaDevolucion" value="Fecha de Devolucion"/>
+                        <p:calendar id="fechaDevolucion" disabled="#{frmUsuarios.rDisableP() == 0}" value="#{frmUsuarios.fechaDevolucion}" showOn="button"/>
+                        <p:commandButton disabled="#{frmUsuarios.rDisableP() == 0}" id="agregarPrestamo" value="Realizar Prestamo" icon="fa fa-plus" actionListener="#{frmUsuarios.agregarPrestamo()}" onclick="PF('wdialogPrestamo').show();"/>
+                    </h:panelGrid>
+                </p:fieldset> 
+            </h:form>
+        </div>
+        <p:dialog id="dialogPrestamo" widgetVar="wdialogPrestamo" header="Prestamo registrado" closable="false" draggable="false" resizable="false" modal="true" appendTo="@(body)">
+            <div align="center">
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="Id asignado: "/>
+                        <p:outputLabel value="#{frmUsuarios.rIdPrestamo()}"/>
+                    </h:panelGrid>
+                    <h:panelGrid>
+                        <p:commandButton value="Ok" icon="fa fa-check-circle" action="usuario.jsf?faces-redirect=true"/>
+                    </h:panelGrid>
+                </h:form>
+            </div>
+        </p:dialog>
+        <br></br>
+        <br></br>
+        <div align="center">
+            <h:form id="createU">
+                <p:fieldset>
+                    <h3>Registrarse</h3>
+                    <h:panelGrid>
+                        <p:commandButton id="registrar" disabled="#{frmUsuarios.rDisableR() == 1}" value="Nuevo Usuario" icon="fa fa-user-plus" action="#{frmUsuarios.setDisableR(1)}" process="registrar" update="createU:registrar createU:nombre createU:apellido createU:telefono createU:direccion createU:identificacion createU:agregarU"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2">
+                        <p:outputLabel for="nombre" value="Nombre"/>
+                        <p:inputText id="nombre" disabled="#{frmUsuarios.rDisableR() == 0}" value="#{frmUsuarios.nombreUsuario}"/>
+                        <p:outputLabel for="apellido" value="Apellido"/>
+                        <p:inputText id="apellido" disabled="#{frmUsuarios.rDisableR() == 0}" value="#{frmUsuarios.apelllidoUsuario}"/>
+                        <p:outputLabel for="telefono" value="Telefono"/>
+                        <p:inputText id="telefono" disabled="#{frmUsuarios.rDisableR() == 0}" value="#{frmUsuarios.telefonoUsuario}"/>
+                        <p:outputLabel for="direccion" value="Direccion"/>
+                        <p:inputText id="direccion" disabled="#{frmUsuarios.rDisableR() == 0}" value="#{frmUsuarios.direccionUsuario}"/>
+                        <p:outputLabel for="identificacion" value="Identificacion"/>
+                        <p:inputText id="identificacion" disabled="#{frmUsuarios.rDisableR() == 0}" value="#{frmUsuarios.identificacionUsuario}"/>
+                        <p:commandButton disabled="#{frmUsuarios.rDisableR() == 0}" id="agregarU" value="Agregar" icon="fa fa-plus" actionListener="#{frmUsuarios.agregarUsuario()}" onclick="PF('wdialogUsuario').show();"/>
+                    </h:panelGrid>
+                </p:fieldset>
+            </h:form>
+        </div>
+        <p:dialog id="dialogUsuario" widgetVar="wdialogUsuario" header="Usuario registrado" closable="false" draggable="false" resizable="false" modal="true" appendTo="@(body)">
+            <div align="center">
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="Id asignado: "/>
+                        <p:outputLabel value="#{frmUsuarios.rIdUsuario()}"/>
+                    </h:panelGrid>
+                    <h:panelGrid>
+                        <p:commandButton value="Ok" icon="fa fa-check-circle" action="usuario.jsf?faces-redirect=true"/>
+                    </h:panelGrid>
+                </h:form>
+            </div>
+        </p:dialog>
+        <div align="center">
+            <h:form>
+                <h:panelGrid>
+                    <p:commandButton value="Inicio" icon="fa fa-arrow-circle-left" action="inicio.jsf?faces-redirect=true"/>
+                </h:panelGrid>
+            </h:form>
+        </div>
+    </h:body>
+</html>
+

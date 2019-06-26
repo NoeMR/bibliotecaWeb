@@ -23,19 +23,21 @@ import mavens.rules.*;
  */
 @Named(value = "frmLibros")
 @ViewScoped
-public class frmLibros implements Serializable {
+public class frmLibros implements Serializable{
 
     /**
      * Creates a new instance of frmLibros
      */
+    
     @Inject
     private LibrosFacadeLocal facade;
     private Libros libro = new Libros();
-
+    
+    
     @Inject
     private LibrosAutoresFacadeLocal facade1;
     private LibrosAutores librosAutores = new LibrosAutores();
-
+    
     private int id;
     private String isbn;
     private String titulo;
@@ -45,137 +47,176 @@ public class frmLibros implements Serializable {
     private List<String> listaEditoriales;
     private List<String> listaPaises;
     private List<String> listaAutores;
-
+    
     @Inject
     private EditorialesFacadeLocal facade3;
     private Editoriales editoriales = new Editoriales();
-
+    
     private int idEditorial;
     private String nombreEditorial;
-
+    
     @Inject
     private PaisesFacadeLocal facade4;
     private Paises paises = new Paises();
-
+    
     private int idPais;
     private String nombrePais;
-
+    
     @Inject
     private AutoresFacadeLocal facade5;
     private Autores autores = new Autores();
-
+    
     private int idAutor;
     private String nombreAutor;
-
+    
     @Inject
     private LibrosCategoriaFacadeLocal facade2;
-
+    
+    @Inject
+    private PrestamosFacadeLocal facade6;
+    
+    private int disable = 0;
+    private int disableE = 0;
+    private int disableP = 0;
+    private int disableA = 0;
+    
     public frmLibros() {
     }
-
-    public List<String> generarlistaEditoriales() {
+    
+    public int rDisable(){
+        return this.disable;
+    }
+    
+    public int rDisableE(){
+        return this.disableE;
+    }
+    
+    public int rDisableP(){
+        return this.disableP;
+    }
+    
+    public int rDisableA(){
+        return this.disableA;
+    }
+    
+    public List<String> generarlistaEditoriales(){
         listaEditoriales = new ArrayList<>();
         for (int i = 0; i < facade3.findAll().size(); i++) {
             listaEditoriales.add(facade3.findAll().get(i).getEditorial());
         }
         return listaEditoriales;
     }
-
-    public List<String> generarlistaPaises() {
+    
+    public List<String> generarlistaPaises(){
         listaPaises = new ArrayList<>();
         for (int i = 0; i < facade4.findAll().size(); i++) {
             listaPaises.add(facade4.findAll().get(i).getPais());
         }
         return listaPaises;
     }
-
-    public List<String> generarlistaAutores() {
+    
+    public List<String> generarlistaAutores(){
         listaAutores = new ArrayList<>();
         for (int i = 0; i < facade5.findAll().size(); i++) {
             listaAutores.add(facade5.findAll().get(i).getAutor());
         }
         return listaAutores;
     }
-
-    public List<Libros> todo() {
+    
+    
+    public List<Libros> todo(){
         return facade.findAll();
     }
-
-    public List<LibrosAutores> todo1() {
+    
+    public List<LibrosAutores> todo1(){
         return facade1.findAll();
     }
-
-    public List<Editoriales> todo2() {
+    
+    public List<Editoriales> todo2(){
         return facade3.findAll();
     }
-
-    public List<Paises> todo3() {
+    
+    public List<Paises> todo3(){
         return facade4.findAll();
     }
-
-    public List<Autores> todo4() {
+    
+    public List<Autores> todo4(){
         return facade5.findAll();
     }
-
-    public String agregar() {
-        int count = 0;
-        int count2 = 0;
-        int count3 = 0;
-        int count4 = 0;
+    
+    public List<Prestamos> todo5(){
+        return facade6.findAll();
+    }
+    
+    public int rIdLibro(){
+        int nuevoId;
+        if ((facade.findAll().size()) == 0) {
+            nuevoId = 1;
+        } else{
+            nuevoId = ((facade.findAll().get((facade.findAll().size()) - 1).getIdLibro()) + 1);
+        }
+        return nuevoId;
+    }
+    
+    public void agregar(){
+        int count=0;
+        int count2=0;
+        int count3=0;
+        int count4=0;
         this.libro.setIdLibro(id);
         this.libro.setIsbn(isbn);
         this.libro.setTitulo(titulo);
-        while (!(facade3.findAll().get(count).getEditorial().equals(editorial))) {
+        while(!(facade3.findAll().get(count).getEditorial().equals(editorial))){
             count++;
         }
         this.libro.setEditorialesIdEditorial(facade3.findAll().get(count));
-        while (!(facade4.findAll().get(count2).getPais().equals(pais))) {
+        while(!(facade4.findAll().get(count2).getPais().equals(pais))){
             count2++;
         }
         this.libro.setPaisesIdPais(facade4.findAll().get(count2));
         this.facade.create(libro);
-        while (!(facade.findAll().get(count3).getTitulo().equals(titulo))) {
+        while(!(facade.findAll().get(count3).getTitulo().equals(titulo))){
             count3++;
         }
         this.librosAutores.setLibrosIdLibro(facade.findAll().get(count3));
-        while (!(facade5.findAll().get(count4).getAutor().equals(autor))) {
+        while(!(facade5.findAll().get(count4).getAutor().equals(autor))){
             count4++;
         }
         this.librosAutores.setAutoresIdAutor(facade5.findAll().get(count4));
         this.facade1.create(librosAutores);
-        return "tablaLibros.jsf?faces-redirect=true";
     }
-
-    public String agregarEditorial() {
+    
+    public void eliminar(){
+        int count = 0;
+        int count1 = 0;
+        while(!(facade.findAll().get(count).getIdLibro() == id)){
+            count++;
+        }
+        while(!(facade1.findAll().get(count1).getLibrosIdLibro().getIdLibro() == id)){
+            count1++;
+        }
+        this.facade1.remove(facade1.findAll().get(count1));
+        this.facade.remove(facade.findAll().get(count));
+    }
+    
+    public void agregarEditorial(){
         this.editoriales.setIdEditorial(idEditorial);
         this.editoriales.setEditorial(nombreEditorial);
         this.facade3.create(editoriales);
-        return "tablaLibros.jsf?faces-redirect=true";
     }
-
-    public String agregarPais() {
+    
+    public void agregarPais(){
         this.paises.setIdPais(idPais);
         this.paises.setPais(nombrePais);
         this.facade4.create(paises);
-        return "tablaLibros.jsf?faces-redirect=true";
     }
-
-    public String agregarAutor() {
+    
+    public void agregarAutor(){
         this.autores.setIdAutor(idAutor);
         this.autores.setAutor(nombreAutor);
         this.facade5.create(autores);
-        return "tablaLibros.jsf?faces-redirect=true";
     }
-
-    public String eliminarLibro() {
-        int count4=0;
-        while (!(facade.findAll().get(count4).getIdLibro().equals(id))) {
-            count4++;
-        }
-        this.facade.remove(facade.findAll().get(count4));
-        return "tablaLibros.jsf?faces-redirect=true";
-    }
-
+    
     public int getId() {
         return id;
     }
@@ -296,4 +337,36 @@ public class frmLibros implements Serializable {
         this.listaAutores = listaAutores;
     }
 
+    public int getDisable() {
+        return this.disable;
+    }
+
+    public void setDisable(int disable) {
+        this.disable = disable;
+    }
+
+    public int getDisableE() {
+        return disableE;
+    }
+
+    public void setDisableE(int disableE) {
+        this.disableE = disableE;
+    }
+
+    public int getDisableP() {
+        return disableP;
+    }
+
+    public void setDisableP(int disableP) {
+        this.disableP = disableP;
+    }
+
+    public int getDisableA() {
+        return disableA;
+    }
+
+    public void setDisableA(int disableA) {
+        this.disableA = disableA;
+    }
+    
 }

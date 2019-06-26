@@ -58,8 +58,8 @@ public class Libros implements Serializable {
     private String isbn;
     @Column(name = "titulo", length = 75)
     private String titulo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "librosIdLibro", fetch = FetchType.EAGER, targetEntity = LibrosAutores.class)
-    private Collection<LibrosAutores> librosAutores = new ArrayList<LibrosAutores>();
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "librosIdLibro", fetch = FetchType.LAZY)
+    private List<LibrosAutores> librosAutoresList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "librosIdLibro", fetch = FetchType.EAGER, targetEntity = LibrosCategoria.class)
     private Set<LibrosCategoria_> librosCategoria = new HashSet<LibrosCategoria_>();
     @JoinColumn(name = "editoriales_id_editorial", referencedColumnName = "id_editorial", nullable = false)
@@ -104,12 +104,12 @@ public class Libros implements Serializable {
     }
 
     @XmlTransient
-    public Collection<LibrosAutores> getLibrosAutores() {
-        return librosAutores;
+    public List<LibrosAutores> getLibrosAutoresList() {
+        return librosAutoresList;
     }
 
-    public void setLibrosAutores(Collection<LibrosAutores> librosAutores) {
-        this.librosAutores = librosAutores;
+    public void setLibrosAutoresList(List<LibrosAutores> librosAutoresList) {
+        this.librosAutoresList = librosAutoresList;
     }
     
     
