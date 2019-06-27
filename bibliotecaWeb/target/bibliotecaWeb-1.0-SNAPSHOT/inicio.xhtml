@@ -7,11 +7,27 @@
         <title>Inicio</title>
     </h:head>
     <h:body>
-        <div align="center">
+        <div align="center" style="position: absolute; top: 25%; margin-top: -20px; right: 50%; margin-right: -100px;">
             <h:form>
                 <h:panelGrid>
-                    <p:commandButton value="Administrador" icon="fa fa-arrow-circle-right" action="administrador.jsf?faces-redirect=true"/>
-                    <p:commandButton value="Usuario" icon="fa fa-arrow-circle-right" action="usuario.jsf?faces-redirect=true"/>
+                    <h:panelGrid>
+                        <p:link href="administrador.jsf?faces-redirect=true">
+                            <h:panelGrid>
+                                <p:graphicImage cache="false" library="imagenes" name="administrador.jpg" alt="administrador"/>
+                                <p:commandButton value="Administrador" icon="fa fa-arrow-circle-right" action="administrador.jsf?faces-redirect=true"/>
+                            </h:panelGrid>
+                        </p:link>
+                    </h:panelGrid>
+                    <br></br>
+                    <br></br>
+                    <h:panelGrid>
+                        <p:link href="usuario.jsf?faces-redirect=true">
+                            <h:panelGrid>
+                                <p:graphicImage cache="false" library="imagenes" name="usuario.png" alt="usuario"/>
+                                <p:commandButton value="Usuario" icon="fa fa-arrow-circle-right" action="usuario.jsf?faces-redirect=true"/>
+                            </h:panelGrid>
+                        </p:link>
+                    </h:panelGrid>
                 </h:panelGrid>
             </h:form>
         </div>

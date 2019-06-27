@@ -37,6 +37,9 @@ public class frmUsuarios implements Serializable{
     private String direccionUsuario;
     private String identificacionUsuario;
     
+    private int usuarioConsulta;
+    private List<Prestamos> prestamosUsuario;
+    
     @Inject
     private PrestamosFacadeLocal facade1;
     private Prestamos prestamo = new Prestamos();
@@ -124,6 +127,16 @@ public class frmUsuarios implements Serializable{
         }
         this.prestamo.setUsuariosIdUsuario(facade.findAll().get(count2));
         this.facade1.create(prestamo);
+    }
+    
+    public List<Prestamos> consutaPrestamo(){
+        prestamosUsuario = new ArrayList<>();
+        for (int i = 0; i < facade1.findAll().size(); i++) {
+            if ((facade1.findAll().get(i).getUsuariosIdUsuario().getIdUsuario()) == usuarioConsulta) {
+                prestamosUsuario.add(facade1.findAll().get(i));
+            }
+        }
+        return prestamosUsuario;
     }
 
     public int getIdUsuario() {
@@ -228,6 +241,22 @@ public class frmUsuarios implements Serializable{
 
     public void setDisableP(int disableP) {
         this.disableP = disableP;
+    }
+
+    public int getUsuarioConsulta() {
+        return usuarioConsulta;
+    }
+
+    public void setUsuarioConsulta(int usuarioConsulta) {
+        this.usuarioConsulta = usuarioConsulta;
+    }
+
+    public List<Prestamos> getPrestamosUsuario() {
+        return prestamosUsuario;
+    }
+
+    public void setPrestamosUsuario(List<Prestamos> prestamosUsuario) {
+        this.prestamosUsuario = prestamosUsuario;
     }
 
 }

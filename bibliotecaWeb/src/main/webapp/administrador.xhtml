@@ -145,52 +145,82 @@
         <br></br>
         <br></br>
         <div align="center">
-            <h3>Libros</h3>
             <h:form>
-                <p:dataTable paginator="true" rows="5" value="#{frmLibros.todo1()}" var="l">
-                    <p:column headerText="Id">
-                        <h:outputText value="#{l.librosIdLibro.idLibro}"/>
-                    </p:column>
-                    <p:column headerText="ISBN">
-                        <h:outputText value="#{l.librosIdLibro.isbn}"/>
-                    </p:column>
-                    <p:column headerText="Titulo">
-                        <h:outputText value="#{l.librosIdLibro.titulo}"/>
-                    </p:column>>
-                    <p:column headerText="Editorial">
-                        <h:outputText value="#{l.librosIdLibro.editorialesIdEditorial.editorial}"/>
-                    </p:column>
-                    <p:column headerText="Pais">
-                        <h:outputText value="#{l.librosIdLibro.paisesIdPais.pais}"/>
-                    </p:column>
-                    <p:column headerText="Autor">
-                        <h:outputText value="#{l.autoresIdAutor.autor}"/>
-                    </p:column>
-                </p:dataTable>
+                <p:fieldset legend="Libros">
+                    <p:dataTable paginator="true" rows="5" value="#{frmLibros.todo1()}" var="l">
+                        <p:column headerText="Id" filterBy="#{l.librosIdLibro.idLibro}" filterMatchMode="contains">
+                            <h:outputText value="#{l.librosIdLibro.idLibro}"/>
+                        </p:column>
+                        <p:column headerText="ISBN" filterBy="#{l.librosIdLibro.isbn}" filterMatchMode="contains">
+                            <h:outputText value="#{l.librosIdLibro.isbn}"/>
+                        </p:column>
+                        <p:column headerText="Titulo" filterBy="#{l.librosIdLibro.titulo}" filterMatchMode="contains">
+                            <h:outputText value="#{l.librosIdLibro.titulo}"/>
+                        </p:column>>
+                        <p:column headerText="Editorial" filterBy="#{l.librosIdLibro.editorialesIdEditorial.editorial}" filterMatchMode="contains">
+                            <h:outputText value="#{l.librosIdLibro.editorialesIdEditorial.editorial}"/>
+                        </p:column>
+                        <p:column headerText="Pais" filterBy="#{l.librosIdLibro.paisesIdPais.pais}" filterMatchMode="contains">
+                            <h:outputText value="#{l.librosIdLibro.paisesIdPais.pais}"/>
+                        </p:column>
+                        <p:column headerText="Autor" filterBy="#{l.autoresIdAutor.autor}" filterMatchMode="contains">
+                            <h:outputText value="#{l.autoresIdAutor.autor}"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:fieldset>
             </h:form>
         </div>
         <br></br>
         <br></br>
         <div align="center">
-            <h3>Prestamos</h3>
             <h:form>
-                <p:dataTable paginator="true" rows="5" value="#{frmLibros.todo5()}" var="p">
-                    <p:column headerText="Id Prestamo">
-                        <h:outputText value="#{p.idPrestamo}"/>
-                    </p:column>
-                    <p:column headerText="Id Usuario">
-                        <h:outputText value="#{p.usuariosIdUsuario.idUsuario}"/>
-                    </p:column>
-                    <p:column headerText="Id Libro">
-                        <h:outputText value="#{p.librosExistenciasIdExistencia.librosIdLibro.idLibro}"/>
-                    </p:column>>
-                    <p:column headerText="Fecha del prestamo">
-                        <h:outputText value="#{p.fechaPrestamo}"/>
-                    </p:column>
-                    <p:column headerText="Fecha de devolucion">
-                        <h:outputText value="#{p.fechaDevolución}"/>
-                    </p:column>
-                </p:dataTable>
+                <p:fieldset legend="Prestamos">
+                    <p:dataTable paginator="true" rows="5" value="#{frmLibros.todo5()}" var="p">
+                        <p:column headerText="Id Prestamo" filterBy="#{p.idPrestamo}" filterMatchMode="contains">
+                            <h:outputText value="#{p.idPrestamo}"/>
+                        </p:column>
+                        <p:column headerText="Id Usuario" filterBy="#{p.usuariosIdUsuario.idUsuario}" filterMatchMode="contains">
+                            <h:outputText value="#{p.usuariosIdUsuario.idUsuario}"/>
+                        </p:column>
+                        <p:column headerText="Id Libro" filterBy="#{p.librosExistenciasIdExistencia.librosIdLibro.idLibro}" filterMatchMode="contains">
+                            <h:outputText value="#{p.librosExistenciasIdExistencia.librosIdLibro.idLibro}"/>
+                        </p:column>>
+                        <p:column headerText="Fecha del prestamo" filterBy="#{p.fechaPrestamo.year + 1900}-#{p.fechaPrestamo.month + 1}-#{p.fechaPrestamo.date} || #{p.fechaPrestamo}" filterMatchMode="contains">
+                            <h:outputText value="#{p.fechaPrestamo.year + 1900}-#{p.fechaPrestamo.month + 1}-#{p.fechaPrestamo.date}"/>
+                        </p:column>
+                        <p:column headerText="Fecha de devolucion" filterBy="#{p.fechaDevolución.year + 1900}-#{p.fechaDevolución.month + 1}-#{p.fechaDevolución.date} || #{p.fechaDevolución}" filterMatchMode="contains">
+                            <h:outputText value="#{p.fechaDevolución.year + 1900}-#{p.fechaDevolución.month + 1}-#{p.fechaDevolución.date}"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:fieldset>
+            </h:form>
+        </div>
+        <br></br>
+        <br></br>
+        <div align="center">
+            <h:form>
+                <p:fieldset legend="Usuarios">
+                    <p:dataTable paginator="true" rows="5" value="#{frmLibros.todo6()}" var="u">
+                        <p:column headerText="Id" filterBy="#{u.idUsuario}" filterMatchMode="contains">
+                            <h:outputText value="#{u.idUsuario}"/>
+                        </p:column>
+                        <p:column headerText="Nombre" filterBy="#{u.nombre}" filterMatchMode="contains">
+                            <h:outputText value="#{u.nombre}"/>
+                        </p:column>
+                        <p:column headerText="Apellido" filterBy="#{u.apellido}" filterMatchMode="contains">
+                            <h:outputText value="#{u.apellido}"/>
+                        </p:column>>
+                        <p:column headerText="Telefono" filterBy="#{u.teléfono}" filterMatchMode="contains">
+                            <h:outputText value="#{u.teléfono}"/>
+                        </p:column>
+                        <p:column headerText="Direccion" filterBy="#{u.dirección}" filterMatchMode="contains">
+                            <h:outputText value="#{u.dirección}"/>
+                        </p:column>
+                        <p:column headerText="Identificacion" filterBy="#{u.dui}" filterMatchMode="contains">
+                            <h:outputText value="#{u.dui}"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:fieldset>
             </h:form>
         </div>
         <br></br>

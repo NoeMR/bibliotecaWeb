@@ -75,6 +75,9 @@ public class frmLibros implements Serializable{
     @Inject
     private PrestamosFacadeLocal facade6;
     
+    @Inject
+    private UsuariosFacadeLocal facade7;
+    
     private int disable = 0;
     private int disableE = 0;
     private int disableP = 0;
@@ -146,6 +149,10 @@ public class frmLibros implements Serializable{
     
     public List<Prestamos> todo5(){
         return facade6.findAll();
+    }
+    
+    public List<Usuarios> todo6(){
+        return facade7.findAll();
     }
     
     public int rIdLibro(){

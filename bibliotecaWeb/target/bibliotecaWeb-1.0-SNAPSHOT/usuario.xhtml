@@ -5,6 +5,34 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Usuario</title>
+        <script type="text/javascript">
+            PrimeFaces.locales['es'] = {
+                closeText: 'Cerrar',
+                prevText: 'Anterior',
+                nextText: 'Siguiente',
+                monthNames: ['Enero','Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+                dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
+                dayNamesShort: ['Dom','Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                dayNamesMin: ['D','L','M','M','J','V','S'],
+                weekHeader: 'Semana',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Sólo hora',
+                timeText: 'Tiempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                currentText: 'Fecha actual',
+                ampm: false,
+                month: 'Mes',
+                week: 'Semana',
+                day: 'Día',
+                allDayText : 'Todo el día'
+        };
+        </script>
     </h:head>
     <h:body>
         <h1 align="center">Usuario</h1>
@@ -12,35 +40,35 @@
         <br></br>
         <div align="center">
             <h:form id="mostrar">
-                <h3>Buscar Libro</h3>
-                <p:dataTable id="tabla1" paginator="true" rows="5" value="#{frmLibros.todo1()}" var="l">
-                    <p:column headerText="Id" filterBy="#{l.librosIdLibro.idLibro}" filterMatchMode="contains">
-                        <h:outputText value="#{l.librosIdLibro.idLibro}"/>
-                    </p:column>
-                    <p:column headerText="ISBN" filterBy="#{l.librosIdLibro.isbn}" filterMatchMode="contains">
-                        <h:outputText value="#{l.librosIdLibro.isbn}"/>
-                    </p:column>
-                    <p:column headerText="Titulo" filterBy="#{l.librosIdLibro.titulo}" filterMatchMode="contains">
-                        <h:outputText value="#{l.librosIdLibro.titulo}"/>
-                    </p:column>>
-                    <p:column headerText="Editorial" filterBy="#{l.librosIdLibro.editorialesIdEditorial.editorial}" filterMatchMode="contains">
-                        <h:outputText value="#{l.librosIdLibro.editorialesIdEditorial.editorial}"/>
-                    </p:column>
-                    <p:column headerText="Pais" filterBy="#{l.librosIdLibro.paisesIdPais.pais}" filterMatchMode="contains">
-                        <h:outputText value="#{l.librosIdLibro.paisesIdPais.pais}"/>
-                    </p:column>
-                    <p:column headerText="Autor" filterBy="#{l.autoresIdAutor.autor}" filterMatchMode="contains">
-                        <h:outputText value="#{l.autoresIdAutor.autor}"/>
-                    </p:column>
-                </p:dataTable>
+                <p:fieldset legend="Buscar Libro">
+                    <p:dataTable id="tabla1" paginator="true" rows="5" value="#{frmLibros.todo1()}" var="l">
+                        <p:column headerText="Id" filterBy="#{l.librosIdLibro.idLibro}" filterMatchMode="contains">
+                            <h:outputText value="#{l.librosIdLibro.idLibro}"/>
+                        </p:column>
+                        <p:column headerText="ISBN" filterBy="#{l.librosIdLibro.isbn}" filterMatchMode="contains">
+                            <h:outputText value="#{l.librosIdLibro.isbn}"/>
+                        </p:column>
+                        <p:column headerText="Titulo" filterBy="#{l.librosIdLibro.titulo}" filterMatchMode="contains">
+                            <h:outputText value="#{l.librosIdLibro.titulo}"/>
+                        </p:column>>
+                        <p:column headerText="Editorial" filterBy="#{l.librosIdLibro.editorialesIdEditorial.editorial}" filterMatchMode="contains">
+                            <h:outputText value="#{l.librosIdLibro.editorialesIdEditorial.editorial}"/>
+                        </p:column>
+                        <p:column headerText="Pais" filterBy="#{l.librosIdLibro.paisesIdPais.pais}" filterMatchMode="contains">
+                            <h:outputText value="#{l.librosIdLibro.paisesIdPais.pais}"/>
+                        </p:column>
+                        <p:column headerText="Autor" filterBy="#{l.autoresIdAutor.autor}" filterMatchMode="contains">
+                            <h:outputText value="#{l.autoresIdAutor.autor}"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:fieldset>
             </h:form>
         </div>
         <br></br>
         <br></br>
         <div align="center">
             <h:form id="createPr">
-                <p:fieldset>
-                    <h3>Prestar Libro</h3>
+                <p:fieldset legend="Prestar Libro">
                     <h:panelGrid>
                         <p:commandButton id="prestar" disabled="#{frmUsuarios.rDisableP() == 1}" value="Nuevo Prestamo" icon="fa fa-book" action="#{frmUsuarios.setDisableP(1)}" process="prestar" update="createPr:prestar createPr:idUsuario createPr:idLibro createPr:fechaPrestamo createPr:fechaDevolucion createPr:agregarPrestamo"/>
                     </h:panelGrid>
@@ -50,9 +78,9 @@
                         <p:outputLabel for="idLibro" value="Id Libro"/>
                         <p:inputText id="idLibro" disabled="#{frmUsuarios.rDisableP() == 0}" value="#{frmUsuarios.idLibroPrestamo}"/>
                         <p:outputLabel for="fechaPrestamo" value="Fecha del Prestamo"/>
-                        <p:calendar id="fechaPrestamo" disabled="#{frmUsuarios.rDisableP() == 0}" value="#{frmUsuarios.fechaPrestamo}" showOn="button"/>
+                        <p:calendar id="fechaPrestamo" disabled="#{frmUsuarios.rDisableP() == 0}" value="#{frmUsuarios.fechaPrestamo}" pattern="yyyy-MM-dd" locale="es" showOn="button"/>
                         <p:outputLabel for="fechaDevolucion" value="Fecha de Devolucion"/>
-                        <p:calendar id="fechaDevolucion" disabled="#{frmUsuarios.rDisableP() == 0}" value="#{frmUsuarios.fechaDevolucion}" showOn="button"/>
+                        <p:calendar id="fechaDevolucion" disabled="#{frmUsuarios.rDisableP() == 0}" value="#{frmUsuarios.fechaDevolucion}" pattern="yyyy-MM-dd" locale="es" showOn="button"/>
                         <p:commandButton disabled="#{frmUsuarios.rDisableP() == 0}" id="agregarPrestamo" value="Realizar Prestamo" icon="fa fa-plus" actionListener="#{frmUsuarios.agregarPrestamo()}" onclick="PF('wdialogPrestamo').show();"/>
                     </h:panelGrid>
                 </p:fieldset> 
@@ -62,7 +90,7 @@
             <div align="center">
                 <h:form>
                     <h:panelGrid columns="2">
-                        <p:outputLabel value="Id asignado: "/>
+                        <p:outputLabel value="Id de Prestamo asignado: "/>
                         <p:outputLabel value="#{frmUsuarios.rIdPrestamo()}"/>
                     </h:panelGrid>
                     <h:panelGrid>
@@ -74,9 +102,38 @@
         <br></br>
         <br></br>
         <div align="center">
+            <h:form>
+                <p:fieldset legend="Consulta tus prestamos">
+                    <h:panelGrid columns="3">
+                        <p:outputLabel for="idUC" value="Id Usuario"/>
+                        <p:inputText id="idUC" value="#{frmUsuarios.usuarioConsulta}"/>
+                        <p:commandButton value="Consultar" icon="fa fa-search" update="nC"/>
+                    </h:panelGrid>
+                    <p:dataTable id="nC" paginator="true" rows="5" value="#{frmUsuarios.consutaPrestamo()}" var="c">
+                        <p:column headerText="Id Prestamo">
+                            <h:outputText value="#{c.idPrestamo}"/>
+                        </p:column>
+                        <p:column headerText="Id Usuario">
+                            <h:outputText value="#{c.usuariosIdUsuario.idUsuario}"/>
+                        </p:column>
+                        <p:column headerText="Id Libro">
+                            <h:outputText value="#{c.librosExistenciasIdExistencia.librosIdLibro.idLibro}"/>
+                        </p:column>>
+                        <p:column headerText="Fecha del prestamo">
+                            <h:outputText value="#{c.fechaPrestamo.year + 1900}-#{c.fechaPrestamo.month + 1}-#{c.fechaPrestamo.date}"/>
+                        </p:column>
+                        <p:column headerText="Fecha de devolucion">
+                            <h:outputText value="#{c.fechaDevolución.year + 1900}-#{c.fechaDevolución.month + 1}-#{c.fechaDevolución.date}"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:fieldset>
+            </h:form>
+        </div>
+        <br></br>
+        <br></br>
+        <div align="center">
             <h:form id="createU">
-                <p:fieldset>
-                    <h3>Registrarse</h3>
+                <p:fieldset legend="Registrarse">
                     <h:panelGrid>
                         <p:commandButton id="registrar" disabled="#{frmUsuarios.rDisableR() == 1}" value="Nuevo Usuario" icon="fa fa-user-plus" action="#{frmUsuarios.setDisableR(1)}" process="registrar" update="createU:registrar createU:nombre createU:apellido createU:telefono createU:direccion createU:identificacion createU:agregarU"/>
                     </h:panelGrid>
@@ -100,7 +157,7 @@
             <div align="center">
                 <h:form>
                     <h:panelGrid columns="2">
-                        <p:outputLabel value="Id asignado: "/>
+                        <p:outputLabel value="Id de Usuario asignado: "/>
                         <p:outputLabel value="#{frmUsuarios.rIdUsuario()}"/>
                     </h:panelGrid>
                     <h:panelGrid>
@@ -109,6 +166,8 @@
                 </h:form>
             </div>
         </p:dialog>
+        <br></br>
+        <br></br>
         <div align="center">
             <h:form>
                 <h:panelGrid>
